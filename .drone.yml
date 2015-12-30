@@ -1,0 +1,39 @@
+clone:
+  path: github.com/drone-plugins
+  recursive: true
+
+build:
+  image: armhfbuild/golang:1.5
+  environment:
+    - GO15VENDOREXPERIMENT=1
+    - GOOS=linux
+    - GOARCH=arm
+    - CGO_ENABLED=0
+  commands:
+    - cd drone-slack
+    - sed -i 's/FROM gliderlabs\/alpine/FROM armhfbuild\/alpine/' Dockerfile
+    - go get
+    - go build
+    - go test
+
+publish:
+  docker:
+    context: drone-slack
+    file: drone-slack/Dockerfile
+    username: $$DOCKER_USER
+    email: $$DOCKER_EMAIL
+    password: $$DOCKER_PASSWORD
+    repo: armhfplugins/drone-slack
+    storage_driver: overlay
+    when:
+      repo: armhf-drone-plugins/drone-slack
+      branch: master
+
+plugin:
+  name: Slack
+  desc: Send build status notifications to your Slack channel.
+  type: notify
+  image: armhfplugins/drone-slack
+  labels:
+    - chat
+    - messaging
