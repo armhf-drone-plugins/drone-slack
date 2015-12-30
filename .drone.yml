@@ -10,6 +10,7 @@ build:
     - GOARCH=arm
     - CGO_ENABLED=0
   commands:
+    - git clone --single-branch https://github.com/drone-plugins/drone-slack
     - cd drone-slack
     - sed -i 's/FROM gliderlabs\/alpine/FROM armhfbuild\/alpine/' Dockerfile
     - go get

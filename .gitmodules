@@ -1,3 +1,0 @@
-[submodule "drone-slack"]
-	path = drone-slack
-	url = https://github.com/drone-plugins/drone-slack
