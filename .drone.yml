@@ -13,6 +13,7 @@ build:
     - git clone --single-branch https://github.com/drone-plugins/drone-slack
     - cd drone-slack
     - sed -i 's/FROM gliderlabs\/alpine/FROM armhfbuild\/alpine/' Dockerfile
+    - sed -i 's/apk\-install/apk add \-\-update-cache/' Dockerfile
     # Workaround for https://github.com/golang/go/issues/12573
     - go get || go get -u
     - go build
